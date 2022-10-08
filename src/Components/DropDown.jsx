@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 
@@ -8,7 +8,7 @@ const Cotainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 20rem;
-  height: ${({isSeleccion}) => isSeleccion? "0rem" : "20rem"};
+  height: ${({isSeleccion , isIdSlected}) => (isSeleccion || isIdSlected ? "0rem" : "20rem")};
   margin: 0.4rem;
   border-radius: 1rem;
   flex-direction: column;
@@ -43,7 +43,7 @@ const Cotainer = styled.div`
 
 
 
-function DropDown({ contentdropDown, isSeleccion, seleccionIdDrop }) {
+function DropDown({ contentdropDown, isSeleccion, seleccionIdDrop, metSeleccion }) {
 
   const renderizador = contentdropDown
 
@@ -53,10 +53,20 @@ function DropDown({ contentdropDown, isSeleccion, seleccionIdDrop }) {
     setId(s)
     seleccionIdDrop(s)
   }
+
+  let menuRef = useRef();
+
+  useEffect(() => (
+    document.addEventListener("mouseup", (event) => {
+      if (menuRef.current.contains(event.target)) {
+        metSeleccion(true)
+      }
+    })
+  ));
   
 
   return (
-    <Cotainer isSeleccion={isSeleccion}>
+    <Cotainer ref={menuRef} isSeleccion={isSeleccion}>
       {renderizador.map((log, index) => (
         <div  isIdSlected={ id === log.id? true: false } onClick={() => selectionsFunction(log.id)} key={index}>
           <h1>{log.label}</h1>

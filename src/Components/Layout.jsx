@@ -8,6 +8,7 @@ import {
 import { BsInstagram, BsFacebook } from "react-icons/bs";
 import { TiArrowSortedDown } from "react-icons/ti";
 import React, { useState, useEffect } from "react";
+import { useRef } from "react";
 
 const Cotainer = styled.div`
   display: flex;
@@ -145,17 +146,6 @@ const Layout = () => {
     setSelcetedId(s)
   };
 
-  useEffect(() => {
-    window.addEventListener('click', function(e){
-	
-      if (document.getElementById('drop').contains(e.target)){
-        console.log("Clicked in Box");
-      } else{
-        console.log("Clicked outside Box"); 
-      }
-    })
-  }, []);
-
 
   return (
     <Cotainer>
@@ -181,8 +171,8 @@ const Layout = () => {
           </div>
         </span>
       </ContainerButton>
-      <ContainerDrop>
-        <DropDown
+      <ContainerDrop >
+        <DropDown 
           isSeleccion={seleccion}
           metSeleccion={setSeleccion}
           contentdropDown={ContentDropDown}
